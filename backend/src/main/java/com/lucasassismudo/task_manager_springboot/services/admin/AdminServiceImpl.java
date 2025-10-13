@@ -58,5 +58,10 @@ public class AdminServiceImpl implements AdminService{
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteTask(Long id) {
+        taskRepository.deleteById(id);
+    }
+
 
 }
