@@ -43,4 +43,13 @@ public class AdminController {
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id){
         return ResponseEntity.ok(adminService.getTaskById(id));
     }
+
+    @PutMapping("/task/{id}")
+    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto){
+        TaskDto updatedTask = adminService.updateTask(id,taskDto);
+        if (updatedTask==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedTask);
+    }
 }
