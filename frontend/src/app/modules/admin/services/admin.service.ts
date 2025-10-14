@@ -36,6 +36,12 @@ export class AdminService {
       headers: this.createAuthorizarionHeader()
     })  
   }
+  
+  getTaskById(id: number): Observable<any>{
+    return this.http.get(BASIC_URL + "api/admin/task/" + id, {
+      headers: this.createAuthorizarionHeader()
+    })  
+  }
 
   private createAuthorizarionHeader(): HttpHeaders{
     return new HttpHeaders().set(
