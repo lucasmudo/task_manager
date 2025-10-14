@@ -3,9 +3,12 @@ package com.lucasassismudo.task_manager_springboot.controller.admin;
 import com.lucasassismudo.task_manager_springboot.dto.TaskDto;
 import com.lucasassismudo.task_manager_springboot.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,5 +54,10 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedTask);
+    }
+
+    @GetMapping("/task/search/{title}")
+    public ResponseEntity<List<TaskDto>> searchTaskByTitle(@PathVariable String title){
+        return ResponseEntity.ok(adminService.searchTaskByTitle(title));
     }
 }

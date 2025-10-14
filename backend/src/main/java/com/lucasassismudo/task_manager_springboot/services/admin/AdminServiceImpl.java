@@ -89,6 +89,15 @@ public class AdminServiceImpl implements AdminService{
         return null;
     }
 
+    @Override
+    public List<TaskDto> searchTaskByTitle(String title) {
+        return taskRepository.findAllByTitleContaining(title)
+                .stream()
+                .sorted(Comparator.comparing(Task::getDueDate).reversed())
+                .map(Task::getTaskDto)
+                .collect(Collectors.toList());
+    }
+
     private TaskStatus mapStringToTaskStatus(String status){
         return switch (status){
             case "PENDING" -> TaskStatus.PENDING;
