@@ -31,6 +31,12 @@ export class AdminService {
     })
   }  
   
+  updateTask(id:number, taskDto:any): Observable<any>{
+    return this.http.put(BASIC_URL + `api/admin/task/${id}`,taskDto, {
+      headers: this.createAuthorizarionHeader()
+    })
+  }  
+  
   deleteTask(id: number): Observable<any>{
     return this.http.delete(BASIC_URL + "api/admin/task/" + id, {
       headers: this.createAuthorizarionHeader()

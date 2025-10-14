@@ -28,10 +28,10 @@
             <div class="actions">
                 <!-- <button mat-icon-button color="accent" class="view-button" routerLink="admin/task-details/{{task.id}}">
                     <mat-icon>visibility</mat-icon>
-                </button>
-                <a mat-icon-button color="primary" class="update-button" [routerLink]="'admin/task/' + task.id + 'edit'">
+                </button> -->
+                <a mat-icon-button color="primary" class="update-button" [routerLink]="'/admin/task/' + task.id + '/edit'">
                     <mat-icon>edit</mat-icon>
-                </a> -->
+                </a>
                 <button mat-icon-button colors="warn" class="delete-button" (click)="deleteTask(task.id)">   
                     <mat-icon>delete</mat-icon> 
                 </button>
