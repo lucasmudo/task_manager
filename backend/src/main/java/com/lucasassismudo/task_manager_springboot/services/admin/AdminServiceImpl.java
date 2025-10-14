@@ -82,6 +82,7 @@ public class AdminServiceImpl implements AdminService{
             existingTask.setDueDate(taskDto.getDueDate());
             existingTask.setPriority(taskDto.getPriority());
             existingTask.setTaskStatus(mapStringToTaskStatus(String.valueOf(taskDto.getTaskStatus())));
+            existingTask.setUser(userRepository.findById(taskDto.getEmployeeId()).get());
             return taskRepository.save(optionalTask.get()).getTaskDto();
         }
         return null;
