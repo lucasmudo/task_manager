@@ -36,6 +36,12 @@ export class AdminService {
       headers: this.createAuthorizarionHeader()
     })
   }  
+
+  searchTask(title:string): Observable<any>{
+    return this.http.get(BASIC_URL + `api/admin/task/search/${title}`, {
+      headers: this.createAuthorizarionHeader()
+    })
+  } 
   
   deleteTask(id: number): Observable<any>{
     return this.http.delete(BASIC_URL + "api/admin/task/" + id, {
