@@ -1,17 +1,23 @@
 package com.lucasassismudo.task_manager_springboot.services.admin;
 
+import com.lucasassismudo.task_manager_springboot.dto.CommentDto;
 import com.lucasassismudo.task_manager_springboot.dto.TaskDto;
 import com.lucasassismudo.task_manager_springboot.dto.UserDto;
+import com.lucasassismudo.task_manager_springboot.entities.Comment;
 import com.lucasassismudo.task_manager_springboot.entities.Task;
 import com.lucasassismudo.task_manager_springboot.entities.User;
 import com.lucasassismudo.task_manager_springboot.enums.TaskStatus;
 import com.lucasassismudo.task_manager_springboot.enums.UserRole;
+import com.lucasassismudo.task_manager_springboot.repositories.CommentRepository;
 import com.lucasassismudo.task_manager_springboot.repositories.TaskRepository;
 import com.lucasassismudo.task_manager_springboot.repositories.UserRepository;
+import com.lucasassismudo.task_manager_springboot.utils.JwtUtil;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +29,10 @@ public class AdminServiceImpl implements AdminService{
     private final UserRepository userRepository;
 
     private final TaskRepository taskRepository;
+
+    private final JwtUtil jwtUtil;
+
+    private final CommentRepository commentRepository;
 
     @Override
     public List<UserDto> getUsers() {
@@ -96,6 +106,21 @@ public class AdminServiceImpl implements AdminService{
                 .sorted(Comparator.comparing(Task::getDueDate).reversed())
                 .map(Task::getTaskDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CommentDto createComment(Long taskId, String content) {
+        Optional<Task> optionalTask = taskRepository.findById(taskId);
+        User user = jwtUtil.getLoggedInUser();
+        if (optionalTask.isPresent() && user != null){
+            Comment comment = new Comment();
+            comment.setCreatedAt(new Date());
+            comment.setContent(content);
+            comment.setTask(optionalTask.get());
+            comment.setUser(user);
+            return commentRepository.save(comment).getCommentDto();
+        }
+        throw new EntityNotFoundException("User or Task not found!");
     }
 
     private TaskStatus mapStringToTaskStatus(String status){

@@ -1,5 +1,6 @@
 package com.lucasassismudo.task_manager_springboot.services.admin;
 
+import com.lucasassismudo.task_manager_springboot.dto.CommentDto;
 import com.lucasassismudo.task_manager_springboot.dto.TaskDto;
 import com.lucasassismudo.task_manager_springboot.dto.UserDto;
 
@@ -20,4 +21,6 @@ public interface AdminService {
     TaskDto updateTask(Long id, TaskDto taskDto);
 
     List<TaskDto> searchTaskByTitle(String title);
+
+    CommentDto createComment(Long taskId, String content);
 }
