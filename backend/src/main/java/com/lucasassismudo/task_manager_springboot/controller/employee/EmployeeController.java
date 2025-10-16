@@ -22,7 +22,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getTasksByUserId());
     }
 
-    @PutMapping("/task/{id}/{status}")
+    @GetMapping("/task/{id}/{status}")
     public ResponseEntity<TaskDto> updateTaskStatus(@PathVariable Long id, @PathVariable String status){
         TaskDto updatedTask = employeeService.updateTaskStatus(id, status);
         if (updatedTask == null){
